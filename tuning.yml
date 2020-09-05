@@ -1,5 +1,2 @@
-# batch_size: [64, 32, 16]
 dropout: [0.2, 0.5]
-# features_type: ["dvector", "ivector"] # Options: mel, mfcc, ivector, dvector
-
 network_config|fully_connected|hidden_nodes: [[64, 64, 64], [32, 32, 32]]

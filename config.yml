@@ -1,11 +1,9 @@
-# Neural Network configuration
-optimizer: "adam"
-activation: "relu"
 batch_size: 32
-dropout: 0.2
-features_type: "dvector" # Options: mel, mfcc, ivector, dvector
-network_type: "fully_connected" # lstm, cnn, attention  ---- Only works on mfcc and mel (fully_connected)
-
+network_type: "fully_connected"
+input_size: 5
+epochs: 100
+loss: "sparse_categorical_crossentropy"
+output_activation: "softmax"
 learning_rate:
   base: 0.001
   decay: 0.01
@@ -14,111 +12,22 @@ learning_rate:
 train_eval_period: 20
 dev_eval_period: 1
 
-input_size:
-  mfcc: 14
-  mel: 24
-  ivector: 400
-  dvector: 256
-  xvector: 512
-
 network_config:
   lstm:
     layers: [[32, 2], [16, 1]]
+    dropout: 0.1
+    activation: 'relu'
   cnn:
     layers: [[32,3],[32,3],[32,3]]
+    dropout: 0.1
     activation: 'relu'
-  tdnn:
-    activation: 'relu'
-    kernels: 512
-    embed_size: 1500
-    hidden_nodes: 512
-  attention:
-    size: [32, 32, 32]
-    heads: [3, 3, 3]
   fully_connected:
-    hidden_nodes: [256] # If number > 1 then it is FC, < 1 dropout
+    hidden_nodes: [256]
     dropout: 0.05
     activation: 'relu'
-  task_specific:
-    hidden_nodes: [64] # If number > 1 then it is FC, < 1 dropout
-    activation: 'relu'
-    dropout: 0.5
-    concat_feat_vector: true
 
-# Audio preprocessing configuration
-sample_rate: 16000
-n_fft: 1024
-power: 2.0
-mel_center: False
-f_min: 0
-f_max: 2000
-frame_shift: 0.01
-frame_duration: 0.025
-n_mels: 24
-n_mfcc: 14
-
-# File paths
 data_dir: "data"
 train_file: "train.txt"
 test_file: "test.txt"
 dev_file: "dev.txt"
-scp_file: "wav.scp"
-ivector_file: "ivector.pickle"
-dvector_file: "dvector.pickle"
-mel_file: "mel.pickle"
-mfcc_file: "mfcc.pickle"
 csv_file: "accuracy.csv"
-report_file: "report.csv"
-
-# Experiment resources
-# "selected_tasks" has to be in the same order as they are defined in "tasks" section
-selected_tasks: ["gender", "emotion", "dialect"] #  gender, emotion, dialect
-selected_datasets: ["ksu", "qcri", "sara", "anad", "mdas", "king"] #  sara, ksu, qcri, anad, king, mdas
-shuffle_tasks: false
-
-training_setup:
-  - epochs: 1
-    selected_tasks: ["gender", "emotion", "dialect"]
-    selected_datasets: ["ksu", "qcri", "sara"]
-    shuffle_tasks: false
-  - epochs: 1
-    selected_tasks: ["gender", "emotion", "dialect"]
-    selected_datasets: ["ksu", "qcri", "sara"]
-    shuffle_tasks: true
-
-        
-# All available datasets    
-available_datasets: ["ksu", "qcri", "sara", "anad", "mdas", "king"]
-
-# Tasks has to be sorted as they show up in the label_list file
-tasks:
-  - name: gender
-    classes:
-      - female
-      - male
-    loss: "sparse_categorical_crossentropy"
-    activation: "softmax"
-    multiplier: 1
-
-  - name: emotion
-    classes:
-      - neutral
-      - happiness
-      - sadness
-      - surprise
-      - questioning
-      - anger
-    loss: "sparse_categorical_crossentropy"
-    activation: "softmax"
-    multiplier: 1
-
-  - name: dialect
-    classes:
-      - egy
-      - msa
-      - lav
-      - glf
-      - nor
-    loss: "sparse_categorical_crossentropy"
-    activation: "softmax"
-    multiplier: 1
