@@ -1,2 +1,1 @@
-dropout: [0.2, 0.5]
 network_config|fully_connected|hidden_nodes: [[64, 64, 64], [32, 32, 32]]

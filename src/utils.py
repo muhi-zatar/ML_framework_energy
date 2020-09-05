@@ -8,15 +8,6 @@ import numpy as np
 import tensorflow as tf
 
 
-def get_feature_input_size(features_type, input_size):
-    if features_type in ["mfcc", "mel"]:
-        return input_size[features_type]
-
-    vector_types = features_type.replace("vector", "")
-    size = sum([input_size[f+"vector"] for f in ["i", "d", "x"] if f in vector_types])
-    return size
-
-
 def evaluate_model(model, data_generator, hparams, mode=None):
     results = {}
     batch_size = data_generator.batch_size
