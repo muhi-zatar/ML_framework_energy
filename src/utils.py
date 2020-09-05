@@ -1,6 +1,7 @@
 from datetime import datetime
 import csv
 import os
+import pandas as pd
 from collections import defaultdict
 
 from sklearn.metrics import f1_score, accuracy_score, confusion_matrix, classification_report
@@ -105,11 +106,11 @@ def build_parameter_combinations(params):
     return frontier
 
 
-class GlobalSTDPooling1D(tf.keras.layers.Layer):
-    def __init__(self, axis=1, **kwargs):
-        super(GlobalSTDPooling1D, self).__init__(**kwargs)
-        self.axis = axis
+def prepare_data(params, data_type):
+    input_data = pd.read_excel(params[data_type], sheets='inputs')
+    output_data = pd.read_excel(params[data_type], sheets='outputs')
 
-    def call(self, inputs):
-        temp = tf.math.reduce_variance(inputs, axis=self.axis)
-        return tf.where(temp > 0, tf.sqrt(temp), 0)
+    inputs = input_data.to_numpy()
+    outputs = output_data.to_numpy()
+
+    return inputs, outputs

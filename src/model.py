@@ -3,10 +3,9 @@ import copy
 import tensorflow as tf
 from tensorflow.keras.callbacks import LearningRateScheduler
 
-from data_generator import DataGenerator
-from networks import lstm, attention, cnn, fully_connected, task_specific, tdnn
-from utils import log_results
-from callbacks import DataGeneratorCallback, EvaluateCallback, LearningRateCallback
+from networks import lstm, cnn, fully_connected
+from utils import prepare_data
+from callbacks import EvaluateCallback, LearningRateCallback
 
 
 def train(hparams):
@@ -33,18 +32,11 @@ def train(hparams):
     lr_callback = LearningRateCallback(hparams['learning_rate'])
     learn_rate_callback = LearningRateScheduler(lr_callback.calculate, verbose=1)
 
-    dev_data_generator = DataGenerator(hparams, loss_weights, data_type='dev')
-    dev_eval_callback = EvaluateCallback(dev_data_generator, "dev", hparams['dev_eval_period'], hparams)
+    x_train, y_train = prepare_data(hparams['train'])
+    x_dev, y_dev = prepare_data(hparams['dev'])
+    x_test, y_test = prepare_data(hparams['test'])
 
-    train_data_generator = DataGenerator(train_params, loss_weights)
-    train_eval_callback = EvaluateCallback(
-        train_data_generator, "train", train_params['train_eval_period'], hparams)
 
-    model.fit(train_data_generator, verbose=1, shuffle=True,
+    model.fit(x_train, y_train, verbose=1, shuffle=True,
               epochs=hparams["epochs"], batch_size=hparams["hparams"],
-              callbacks=[learn_rate_callback, train_eval_callback, dev_eval_callback])
-
-    test_data_generator = DataGenerator(hparams, loss_weights, data_type='test')
-    log_results(dev_eval_callback.best_models[k]["model"], hparams,
-                epochs=dev_eval_callback.best_models[k]["epoch"],
-                data_generator=test_data_generator, mean_type=mean_type)
+              callbacks=learn_rate_callback)

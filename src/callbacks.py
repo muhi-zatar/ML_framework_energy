@@ -7,14 +7,6 @@ from tensorflow.keras.models import clone_model
 from utils import evaluate_model
 
 
-class DataGeneratorCallback(Callback):
-    def __init__(self, data_generator):
-        self.data_generator = data_generator
-
-    def on_epoch_begin(self, epoch, logs=None):
-        self.data_generator.reset()
-
-
 class EvaluateCallback(Callback):
     def __init__(self, data_generator, name, eval_period, hparams):
         self.data_generator = data_generator
