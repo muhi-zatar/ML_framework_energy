@@ -9,7 +9,9 @@ import tensorflow as tf
 
 def evaluate_model(model, x_test, y_test):
     answers = model.predict(x_test)
-    import pdb;pdb.set_trace()
+    answers = np.argmax(answers, axis=0)
+    print(accuracy_score(y_test, answers))
+    print(classification_report(y_test, answers))
 
 
 def build_parameter_combinations(params):

@@ -7,6 +7,7 @@ output_activation: "softmax"
 learning_rate: 0.001
 train_eval_period: 20
 dev_eval_period: 1
+num_classes: 2
 
 network_config:
   lstm:

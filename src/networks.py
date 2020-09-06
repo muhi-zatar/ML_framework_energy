@@ -3,7 +3,7 @@ import sys
 
 
 
-def lstm(input_size, network_config):
+def lstm(hparams, input_size, network_config):
     inputs = tf.keras.Input(shape=(None, input_size))
 
     prev = inputs
@@ -20,11 +20,13 @@ def lstm(input_size, network_config):
                 size, return_sequences=return_sequences))(prev)
         else:
             sys.exit("{} is not a valid LSTM direction".format(direction))
+    outputs = tf.keras.layers.Dense(hparams['num_classes'],
+                                    activation=hparams['output_activation'])(prev)
 
-    return inputs, prev
+    return inputs, outputs
 
 
-def cnn(input_size, network_config):
+def cnn(haparams, input_size, network_config):
     inputs = tf.keras.Input(shape=(None, input_size))
     layers = network_config['layers']
     prev = inputs
@@ -33,12 +35,16 @@ def cnn(input_size, network_config):
         prev = tf.keras.layers.Conv1D(i[0], i[1],
                                       activation=network_config["activation"])(prev)
     shared = tf.keras.layers.GlobalMaxPooling1D()(prev)
-    return inputs, shared
+    outputs = tf.keras.layers.Dense(hparams['num_classes'],
+                                    activation=hparams['output_activation'])(shared)
+    return inputs, outputs
 
 
-def fully_connected(input_size, network_config):
+def fully_connected(hparams, input_size, network_config):
     inputs = tf.keras.Input(shape=(input_size,), dtype=tf.dtypes.float32)
-    outputs = build_dense_layers(inputs, network_config, name="shared")
+    layers = build_dense_layers(inputs, network_config, name="layers")
+    outputs = tf.keras.layers.Dense(hparams['num_classes'],
+                                    activation=hparams['output_activation'])(layers)
     return inputs, outputs
 
 

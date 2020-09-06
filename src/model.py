@@ -11,12 +11,17 @@ def train(hparams):
     input_size = hparams["input_size"]
 
     if hparams["network_type"] == "lstm":
-        inputs, outputs = lstm(input_size, hparams["network_config"]["lstm"])
+        inputs, outputs = lstm(hparams,
+                               input_size,
+                               hparams["network_config"]["lstm"])
     elif hparams["network_type"] == "cnn":
-        inputs, outputs = cnn(input_size, hparams["network_config"]["cnn"])
+        inputs, outputs = cnn(hparams,
+                              input_size,
+                              hparams["network_config"]["cnn"])
     elif hparams["network_type"] == "fully_connected":
-        inputs, outputs = fully_connected(
-            input_size, hparams["network_config"]["fully_connected"])
+        inputs, outputs = fully_connected(hparams,
+                                          input_size,
+                                          hparams["network_config"]["fully_connected"])
     else:
         raise ValueError('Undefined {} network for {} '.format(
             hparams["network_type"], hparams["features_type"]))
