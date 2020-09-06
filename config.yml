@@ -1,14 +1,10 @@
 batch_size: 32
 network_type: "fully_connected"
-input_size: 5
+input_size: 4
 epochs: 100
 loss: "sparse_categorical_crossentropy"
 output_activation: "softmax"
-learning_rate:
-  base: 0.001
-  decay: 0.01
-  decay_after: 3
-
+learning_rate: 0.001
 train_eval_period: 20
 dev_eval_period: 1
 
@@ -26,8 +22,7 @@ network_config:
     dropout: 0.05
     activation: 'relu'
 
-data_dir: "data"
-train_file: "train.txt"
-test_file: "test.txt"
-dev_file: "dev.txt"
+train: "data/train.xlsx"
+test: "data/test.xlsx"
+dev: "data/dev.xlsx"
 csv_file: "results/accuracy.csv"

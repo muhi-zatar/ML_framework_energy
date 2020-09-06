@@ -1,7 +1,6 @@
 import tensorflow as tf
 import sys
 
-from utils import GlobalSTDPooling1D
 
 
 def lstm(input_size, network_config):

@@ -5,7 +5,7 @@ from tensorflow.keras.callbacks import LearningRateScheduler
 
 from networks import lstm, cnn, fully_connected
 from utils import prepare_data
-from callbacks import EvaluateCallback, LearningRateCallback
+#from callbacks import EvaluateCallback, LearningRateCallback
 
 
 def train(hparams):
@@ -26,17 +26,13 @@ def train(hparams):
     model = tf.keras.Model(inputs=inputs, outputs=outputs, name="fault_detector")
     model.summary()
 
-    model.compile(optimizer=tf.keras.optimizers.Adam(1e-4),
+    model.compile(optimizer=tf.keras.optimizers.Adam(hparams["learning_rate"]),
                   loss=hparams["loss"])
 
-    lr_callback = LearningRateCallback(hparams['learning_rate'])
-    learn_rate_callback = LearningRateScheduler(lr_callback.calculate, verbose=1)
-
-    x_train, y_train = prepare_data(hparams['train'])
-    x_dev, y_dev = prepare_data(hparams['dev'])
-    x_test, y_test = prepare_data(hparams['test'])
+    x_train, y_train = prepare_data(hparams, 'train')
+    x_dev, y_dev = prepare_data(hparams, 'dev')
+    x_test, y_test = prepare_data(hparams, 'test')
 
 
     model.fit(x_train, y_train, verbose=1, shuffle=True,
-              epochs=hparams["epochs"], batch_size=hparams["hparams"],
-              callbacks=learn_rate_callback)
+              epochs=hparams["epochs"], batch_size=hparams["batch_size"])
