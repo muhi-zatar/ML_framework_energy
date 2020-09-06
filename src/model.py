@@ -4,8 +4,7 @@ import tensorflow as tf
 from tensorflow.keras.callbacks import LearningRateScheduler
 
 from networks import lstm, cnn, fully_connected
-from utils import prepare_data
-#from callbacks import EvaluateCallback, LearningRateCallback
+from utils import prepare_data, evaluate_model
 
 
 def train(hparams):
@@ -34,5 +33,9 @@ def train(hparams):
     x_test, y_test = prepare_data(hparams, 'test')
 
 
-    model.fit(x_train, y_train, verbose=1, shuffle=True,
+    model.fit(x_train, y_train, verbose=1, shuffle=True, validation_data=(x_dev, y_dev),
               epochs=hparams["epochs"], batch_size=hparams["batch_size"])
+
+    print("====================== Done training ==============================")
+
+    evaluate_model(model, x_test, y_test)

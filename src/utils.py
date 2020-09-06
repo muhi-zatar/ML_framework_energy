@@ -1,5 +1,4 @@
 from datetime import datetime
-import csv
 import os
 import pandas as pd
 from collections import defaultdict
@@ -7,6 +6,10 @@ from collections import defaultdict
 from sklearn.metrics import f1_score, accuracy_score, confusion_matrix, classification_report
 import numpy as np
 import tensorflow as tf
+
+def evaluate_model(model, x_test, y_test):
+    answers = model.predict(x_test)
+    import pdb;pdb.set_trace()
 
 
 def build_parameter_combinations(params):
