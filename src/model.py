@@ -56,6 +56,3 @@ def train(hparams):
             raise ValueError('Undefined {} network type for ML'.format(hparams["network_type"]))
 
     evaluate_model(model, x_test, y_test, hparams["training_type"])
-
-    else:
-        raise ValueError('Undefined {} training type'.format(hparams["training_type"]))

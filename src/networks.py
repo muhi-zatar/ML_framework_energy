@@ -8,7 +8,7 @@ from sklearn import svm
 def NaiiveBayes(x_train, y_train, NB_type):
     if NB_type == 'Gaussian':
         model = GaussianNB()
-    elif NB_type == 'Multinomial'
+    elif NB_type == 'Multinomial':
         model = MultinomialNB()
     elif NB_type == 'Complement':
         model = ComplementNB()
@@ -25,7 +25,7 @@ def KNN(x_train, y_train, k):
     return model
 
 
-def LR(x_train. y_train, c):
+def LR(x_train, y_train, c):
     model = LogisticRegression(random_state=0).fit(x_train, y_train)
     return model
 
