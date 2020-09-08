@@ -40,9 +40,6 @@ def train(hparams):
         model.fit(x_train, y_train, verbose=1, shuffle=True, validation_data=(x_dev, y_dev),
                   epochs=hparams["epochs"], batch_size=hparams["batch_size"])
 
-        print("====================== Done training ==============================")
-
-        evaluate_DL_model(model, x_test, y_test)
 
     elif hparams["training_type"] == 'ML':
 
@@ -50,9 +47,15 @@ def train(hparams):
             model = NaiiveBayes(x_train, y_train, hparams["network_config"]["NB"]["type"])
         elif hparams["network_type"] == 'KNN':
             model = KNN(x_train, y_train, hparams["network_config"]["KNN"]["k"])
+        elif hparams["network_type"] == 'logistic_regression':
+            model = LR(x_train, y_train, hparams["network_config"]["logistic_regression"]["c"])
+        elif hparams["network_type"] == 'SVM':
+            model = SVM(x_train, y_train, hparams["network_config"]["SVM"]["c"],
+                                          hparams["network_config"]["SVM"]["kernel"])
+        else:
+            raise ValueError('Undefined {} network type for ML'.format(hparams["network_type"]))
 
-
-
+    evaluate_model(model, x_test, y_test, hparams["training_type"])
 
     else:
-        raise ValueError('Undefined {} training type for ML'.format(hparams["training_type"]))
+        raise ValueError('Undefined {} training type'.format(hparams["training_type"]))

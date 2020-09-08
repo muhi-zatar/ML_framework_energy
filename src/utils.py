@@ -7,9 +7,10 @@ from sklearn.metrics import f1_score, accuracy_score, confusion_matrix, classifi
 import numpy as np
 import tensorflow as tf
 
-def evaluate_DL_model(model, x_test, y_test):
+def evaluate_model(model, x_test, y_test, train_type):
     answers = model.predict(x_test)
-    answers = np.argmax(answers, axis=0)
+    if train_type == 'DL':
+        answers = np.argmax(answers, axis=0)
     print(accuracy_score(y_test, answers))
     print(classification_report(y_test, answers))
 

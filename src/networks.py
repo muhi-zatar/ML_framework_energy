@@ -2,7 +2,8 @@ import tensorflow as tf
 import sys
 from sklearn.naive_bayes import GaussianNB, MultinomialNB, ComplementNB, BernoulliNB
 from sklearn.neighbors import KNeighborsClassifier
-
+from sklearn.linear_model import LogisticRegression
+from sklearn import svm
 
 def NaiiveBayes(x_train, y_train, NB_type):
     if NB_type == 'Gaussian':
@@ -24,7 +25,13 @@ def KNN(x_train, y_train, k):
     return model
 
 
-def
+def LR(x_train. y_train, c):
+    model = LogisticRegression(random_state=0).fit(x_train, y_train)
+    return model
+
+def SVM(x_train, y_train, c, kernel):
+    model = svm.SVC(c=c, kernel=kernel)
+    return model
 
 def lstm(hparams, input_size, network_config):
     inputs = tf.keras.Input(shape=(None, input_size))
