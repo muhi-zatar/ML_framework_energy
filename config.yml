@@ -1,5 +1,6 @@
-batch_size: 32
+training_type: "DL"
 network_type: "fully_connected"
+batch_size: 32
 input_size: 4
 epochs: 100
 loss: "sparse_categorical_crossentropy"
@@ -22,6 +23,15 @@ network_config:
     hidden_nodes: [256]
     dropout: 0.05
     activation: 'relu'
+  SVM:
+    kernel: 'linear'
+    c: 1
+  logistic_regression:
+    c: 1
+  KNN:
+    k: 5
+  NB:
+    type: 'Gaussian'
 
 train: "data/train.xlsx"
 test: "data/test.xlsx"

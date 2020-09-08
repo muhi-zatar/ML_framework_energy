@@ -10,37 +10,49 @@ from utils import prepare_data, evaluate_model
 def train(hparams):
     input_size = hparams["input_size"]
 
-    if hparams["network_type"] == "lstm":
-        inputs, outputs = lstm(hparams,
-                               input_size,
-                               hparams["network_config"]["lstm"])
-    elif hparams["network_type"] == "cnn":
-        inputs, outputs = cnn(hparams,
-                              input_size,
-                              hparams["network_config"]["cnn"])
-    elif hparams["network_type"] == "fully_connected":
-        inputs, outputs = fully_connected(hparams,
-                                          input_size,
-                                          hparams["network_config"]["fully_connected"])
-    else:
-        raise ValueError('Undefined {} network for {} '.format(
-            hparams["network_type"], hparams["features_type"]))
-
-
-    model = tf.keras.Model(inputs=inputs, outputs=outputs, name="fault_detector")
-    model.summary()
-
-    model.compile(optimizer=tf.keras.optimizers.Adam(hparams["learning_rate"]),
-                  loss=hparams["loss"])
-
     x_train, y_train = prepare_data(hparams, 'train')
     x_dev, y_dev = prepare_data(hparams, 'dev')
     x_test, y_test = prepare_data(hparams, 'test')
 
+    if hparams['training_type'] == 'DL':
 
-    model.fit(x_train, y_train, verbose=1, shuffle=True, validation_data=(x_dev, y_dev),
-              epochs=hparams["epochs"], batch_size=hparams["batch_size"])
+        if hparams["network_type"] == "lstm":
+            inputs, outputs = lstm(hparams,
+                                   input_size,
+                                   hparams["network_config"]["lstm"])
+        elif hparams["network_type"] == "cnn":
+            inputs, outputs = cnn(hparams,
+                                  input_size,
+                                  hparams["network_config"]["cnn"])
+        elif hparams["network_type"] == "fully_connected":
+            inputs, outputs = fully_connected(hparams,
+                                              input_size,
+                                              hparams["network_config"]["fully_connected"])
+        else:
+            raise ValueError('Undefined {} network for DL'.format(hparams["network_type"]))
 
-    print("====================== Done training ==============================")
+        model = tf.keras.Model(inputs=inputs, outputs=outputs, name="fault_detector")
+        model.summary()
 
-    evaluate_model(model, x_test, y_test)
+        model.compile(optimizer=tf.keras.optimizers.Adam(hparams["learning_rate"]),
+                      loss=hparams["loss"])
+
+        model.fit(x_train, y_train, verbose=1, shuffle=True, validation_data=(x_dev, y_dev),
+                  epochs=hparams["epochs"], batch_size=hparams["batch_size"])
+
+        print("====================== Done training ==============================")
+
+        evaluate_DL_model(model, x_test, y_test)
+
+    elif hparams["training_type"] == 'ML':
+
+        if hparams["network_type"] == 'NB':
+            model = NaiiveBayes(x_train, y_train, hparams["network_config"]["NB"]["type"])
+        elif hparams["network_type"] == 'KNN':
+            model = KNN(x_train, y_train, hparams["network_config"]["KNN"]["k"])
+
+
+
+
+    else:
+        raise ValueError('Undefined {} training type for ML'.format(hparams["training_type"]))

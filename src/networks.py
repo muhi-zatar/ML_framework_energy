@@ -1,7 +1,30 @@
 import tensorflow as tf
 import sys
+from sklearn.naive_bayes import GaussianNB, MultinomialNB, ComplementNB, BernoulliNB
+from sklearn.neighbors import KNeighborsClassifier
 
 
+def NaiiveBayes(x_train, y_train, NB_type):
+    if NB_type == 'Gaussian':
+        model = GaussianNB()
+    elif NB_type == 'Multinomial'
+        model = MultinomialNB()
+    elif NB_type == 'Complement':
+        model = ComplementNB()
+    elif NB_type == 'Bernoulli':
+        model = BernoulliNB()
+    else:
+        raise ValueError('Undefined {} type for NB'.format(NB_type))
+    model.fit(x_train, y_train)
+    return model
+
+
+def KNN(x_train, y_train, k):
+    model = KNeighborsClassifier(n_neighbors=k)
+    return model
+
+
+def
 
 def lstm(hparams, input_size, network_config):
     inputs = tf.keras.Input(shape=(None, input_size))
