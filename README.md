@@ -1,6 +1,6 @@
 # PV-monitor
 
-This repository includes the training scripts for the following architectures; Fully Connected Neural Networks, Long Short Term Memory, Convolutional Neural Networks, for the application of fault classification of a PV plant performance.
+This repository includes the training scripts for the application of fault classification of a PV plant performance. Many architectures were implemented which are; Fully Connected Neural Networks, Long Short Term Memory, Convolutional Neural Networks, alongside 4 machine learning classification algorithms.
 
 **Requirements**
 ```bash
