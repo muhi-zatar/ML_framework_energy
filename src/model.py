@@ -62,7 +62,7 @@ def train(hparams):
         if hparams['training_type']=='DL':
             model.save(hparams['model_path']+'.h5')
         else:
-            with open(haparams['model_path']+'.pkl', 'wb') as file:
+            with open(hparams['model_path']+'.pkl', 'wb') as file:
                 pickle.dump(model, file)
 
 
