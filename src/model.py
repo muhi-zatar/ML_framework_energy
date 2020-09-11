@@ -3,7 +3,7 @@ import copy
 import tensorflow as tf
 from tensorflow.keras.callbacks import LearningRateScheduler
 
-from networks import lstm, cnn, fully_connected
+from networks import lstm, cnn, fully_connected, NaiiveBayes, KNN, LR, SVM
 from utils import prepare_data, evaluate_model
 
 
