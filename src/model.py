@@ -1,4 +1,5 @@
 import copy
+import pickle
 
 import tensorflow as tf
 from tensorflow.keras.callbacks import LearningRateScheduler
@@ -56,3 +57,12 @@ def train(hparams):
             raise ValueError('Undefined {} network type for ML'.format(hparams["network_type"]))
 
     evaluate_model(model, x_test, y_test, hparams["training_type"])
+
+    if bool(hparams['save_model']):
+        if hparams['training_type']=='DL':
+            model.save(hparams['model_path']+'.h5')
+        else:
+            with open(haparams['model_path']+'.pkl', 'wb') as file:
+                pickle.dump(model, file)
+
+

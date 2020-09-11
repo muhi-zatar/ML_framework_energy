@@ -37,3 +37,5 @@ train: "data/train.xlsx"
 test: "data/test.xlsx"
 dev: "data/dev.xlsx"
 csv_file: "results/accuracy.csv"
+save_model: True
+model_path: "models/model"
