@@ -1,9 +1,9 @@
-import copy
 import pickle
-
 import tensorflow as tf
-from tensorflow.keras.callbacks import LearningRateScheduler
 
+from sklearn import preprocessing
+from tensorflow.keras.callbacks import LearningRateScheduler
+from sklearn.model_selection import train_test_split
 from networks import lstm, cnn, fully_connected, NaiiveBayes, KNN, LR, SVM
 from utils import prepare_data, evaluate_model
 
@@ -11,9 +11,12 @@ from utils import prepare_data, evaluate_model
 def train(hparams):
     input_size = hparams["input_size"]
 
-    x_train, y_train = prepare_data(hparams, 'train')
-    x_dev, y_dev = prepare_data(hparams, 'dev')
-    x_test, y_test = prepare_data(hparams, 'test')
+    x, y = prepare_data(hparams, 'train')
+    x_scaled = preprocessing.scale(x)
+    #x_dev, y_dev = prepare_data(hparams, 'dev')
+    #x_test, y_test = prepare_data(hparams, 'test')
+    x_train, x_test, y_train, y_test = train_test_split(x_scaled, y, test_size=0.15, random_state=42)
+    x_train, x_dev, y_train, y_dev = train_test_split(x_train, y_train, test_size=0.15, random_state=42)
 
     if hparams['training_type'] == 'DL':
 

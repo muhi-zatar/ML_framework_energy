@@ -10,7 +10,8 @@ import tensorflow as tf
 def evaluate_model(model, x_test, y_test, train_type):
     answers = model.predict(x_test)
     if train_type == 'DL':
-        answers = np.argmax(answers, axis=0)
+        answers = np.argmax(answers, axis=1)
+#    import pdb;pdb.set_trace()
     print(accuracy_score(y_test, answers))
     print(classification_report(y_test, answers))
 

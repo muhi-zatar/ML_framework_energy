@@ -1,14 +1,15 @@
 training_type: "DL"
 network_type: "fully_connected"
-batch_size: 32
-input_size: 4
-epochs: 100
+batch_size: 128
+input_size: 5
+epochs: 20
 loss: "sparse_categorical_crossentropy"
 output_activation: "softmax"
 learning_rate: 0.001
 train_eval_period: 20
 dev_eval_period: 1
-num_classes: 2
+num_classes: 3
+shuffle: True
 
 network_config:
   lstm:
@@ -20,9 +21,9 @@ network_config:
     dropout: 0.1
     activation: 'relu'
   fully_connected:
-    hidden_nodes: [256]
-    dropout: 0.05
-    activation: 'relu'
+    hidden_nodes: [256, 128]
+    dropout: 0.1
+    activation: 'tanh'
   SVM:
     kernel: 'linear'
     c: 1
@@ -33,7 +34,7 @@ network_config:
   NB:
     type: 'Gaussian'
 
-train: "data/train.xlsx"
+train: "data/Data.xlsx"
 test: "data/test.xlsx"
 dev: "data/dev.xlsx"
 csv_file: "results/accuracy.csv"
