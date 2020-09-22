@@ -30,7 +30,8 @@ def LR(x_train, y_train, c):
     return model
 
 def SVM(x_train, y_train, c, kernel):
-    model = svm.SVC(c=c, kernel=kernel)
+    model = svm.SVC(C=c, kernel=kernel)
+    model.fit(x_train, y_train)
     return model
 
 def lstm(hparams, input_size, network_config):
