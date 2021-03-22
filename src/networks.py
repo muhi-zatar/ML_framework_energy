@@ -58,7 +58,7 @@ def lstm(hparams, input_size, network_config):
 
 
 def cnn(haparams, input_size, network_config):
-    inputs = tf.keras.Input(shape=(None, input_size))
+    inputs = tf.keras.Input(shape=(input_size, 1))
     layers = network_config['layers']
     prev = inputs
 
