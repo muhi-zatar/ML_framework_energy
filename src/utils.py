@@ -38,3 +38,16 @@ def prepare_data(params, data_type):
     outputs = output_data.to_numpy()
 
     return inputs, outputs
+
+def preprocess_images(params, data_type, subs = None, val_split = None):
+    ds = tf.keras.preprocessing.image_dataset_from_directory(params[data_type],
+        labels = 'inferred',
+        validation_split=val_split,
+        subset= subs,
+        label_mode = "int", 
+        batch_size = params['batch_size'], 
+        image_size=tuple(params['network_config']['cnn']['input_shape'])[0:2],
+        seed = 123
+    )
+    return ds
+

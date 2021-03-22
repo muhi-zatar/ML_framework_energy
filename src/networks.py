@@ -4,6 +4,7 @@ from sklearn.naive_bayes import GaussianNB, MultinomialNB, ComplementNB, Bernoul
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn import svm
+import pdb
 
 def NaiiveBayes(x_train, y_train, NB_type):
     if NB_type == 'Gaussian':
@@ -35,6 +36,7 @@ def SVM(x_train, y_train, c, kernel):
     return model
 
 def lstm(hparams, input_size, network_config):
+    # pdb.set_trace()
     inputs = tf.keras.Input(shape=(input_size, 1))
 
     prev = inputs
@@ -57,15 +59,17 @@ def lstm(hparams, input_size, network_config):
     return inputs, outputs
 
 
-def cnn(haparams, input_size, network_config):
-    inputs = tf.keras.Input(shape=(input_size, 1))
+def cnn(hparams, input_size, network_config):
+    # model = tf.keras.Sequential([])
+    inputs = tf.keras.layers.Input(tuple(network_config['input_shape']))
     layers = network_config['layers']
     prev = inputs
 
     for i in layers:
-        prev = tf.keras.layers.Conv1D(i[0], i[1],
+        prev = tf.keras.layers.Conv2D(i[0], i[1],
                                       activation=network_config["activation"])(prev)
-    shared = tf.keras.layers.GlobalMaxPooling1D()(prev)
+    shared = tf.keras.layers.GlobalMaxPooling2D()(prev)
+    shared = tf.keras.layers.Flatten()(prev)
     outputs = tf.keras.layers.Dense(hparams['num_classes'],
                                     activation=hparams['output_activation'])(shared)
     return inputs, outputs
