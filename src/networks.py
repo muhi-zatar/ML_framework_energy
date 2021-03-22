@@ -35,7 +35,7 @@ def SVM(x_train, y_train, c, kernel):
     return model
 
 def lstm(hparams, input_size, network_config):
-    inputs = tf.keras.Input(shape=(None, input_size))
+    inputs = tf.keras.Input(shape=(input_size, 1))
 
     prev = inputs
     layers = network_config["layers"]
@@ -58,7 +58,7 @@ def lstm(hparams, input_size, network_config):
 
 
 def cnn(haparams, input_size, network_config):
-    inputs = tf.keras.Input(shape=(None, input_size))
+    inputs = tf.keras.Input(shape=(input_size, 1))
     layers = network_config['layers']
     prev = inputs
 
