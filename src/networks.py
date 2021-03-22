@@ -4,7 +4,6 @@ from sklearn.naive_bayes import GaussianNB, MultinomialNB, ComplementNB, Bernoul
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn import svm
-import pdb
 
 def NaiiveBayes(x_train, y_train, NB_type):
     if NB_type == 'Gaussian':
@@ -36,7 +35,6 @@ def SVM(x_train, y_train, c, kernel):
     return model
 
 def lstm(hparams, input_size, network_config):
-    # pdb.set_trace()
     inputs = tf.keras.Input(shape=(input_size, 1))
 
     prev = inputs
@@ -60,7 +58,6 @@ def lstm(hparams, input_size, network_config):
 
 
 def cnn(hparams, input_size, network_config):
-    # model = tf.keras.Sequential([])
     inputs = tf.keras.layers.Input(tuple(network_config['input_shape']))
     layers = network_config['layers']
     prev = inputs
