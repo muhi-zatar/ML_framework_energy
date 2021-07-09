@@ -43,13 +43,15 @@ def train(hparams):
         model = tf.keras.Model(inputs=inputs, outputs=outputs, name="fault_detector")
         model.summary()
 
+        tb_callback = tf.keras.callbacks.TensorBoard(log_dir="logs/", histogram_freq = 1)
+
         model.compile(optimizer=tf.keras.optimizers.Adam(hparams["learning_rate"]),
                       loss=hparams["loss"])
         if hparams["network_type"] == "cnn":
             model.fit(ds_train, verbose=1, epochs=hparams["epochs"], shuffle=True, validation_data=ds_dev)
         else:
             model.fit(x_train, y_train, verbose=1, shuffle=True, validation_data=(x_dev, y_dev),
-                      epochs=hparams["epochs"], batch_size=hparams["batch_size"])
+                      epochs=hparams["epochs"], batch_size=hparams["batch_size"], callbacks= [tb_callback])
 
 
     elif hparams["training_type"] == 'ML':

@@ -15,4 +15,9 @@ To run the code:
 ```bash
 python train.py --config config.yml --tuning tuning.yml
 ```
+To open TensorBoard for visualization:
+```bash
+tensorboard --logdir logs/
+```
+
 The tuning is optional.
