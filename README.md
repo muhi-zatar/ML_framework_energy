@@ -3,6 +3,8 @@
 This repository includes the training scripts for the application of fault classification of a PV plant performance. Many architectures were implemented which are; Fully Connected Neural Networks, Long Short Term Memory, Convolutional Neural Networks, alongside 4 machine learning classification algorithms.
 
 **Requirements**
+To install teh required packages
+
 ```bash
 pip install -r requirements.txt
 ```
