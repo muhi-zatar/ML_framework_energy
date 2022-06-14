@@ -1,44 +1,43 @@
-# Configuration file
-training_type: "DL"
-network_type: "fully_connected"
-batch_size: 128
-input_size: 5
-epochs: 20
-loss: "sparse_categorical_crossentropy"
-output_activation: "softmax"
-learning_rate: 0.001
-train_eval_period: 20
-dev_eval_period: 1
-num_classes: 3
-shuffle: True
+training_type: "ML" # ML or DL
+network_type: "SVM" #DL: "fully connected, lstm, cnn" ML: "SVM, logistic_regression, KNN, NB"
+batch_size: 128 # Number of samples per iteration
+input_size: 5 # Size of input vector
+epochs: 10 # Number of epochs
+loss: "sparse_categorical_crossentropy" # Loss function
+output_activation: "softmax" # Activation of output layer: softmax for classification, sigmoid or linear for regression
+learning_rate: 0.001 # Learning rate value
+train_eval_period: 20 # After how many epochs does it evaluate on training
+dev_eval_period: 1 # After how many epochs does it evaluate on dev
+num_classes: 3 # Number of output classes: 1 for regression 
+shuffle: True # Shuffle the data or not
 
 network_config:
   lstm:
-    layers: [[32, 2], [16, 1]]
-    dropout: 0.1
-    activation: 'relu'
+    layers: [[32, 2], [16, 1]] # Number of hidden nodes in each layer: 2 for bidirectional and 1 for unidirectional
+    dropout: 0.1 # Dropout value
+    activation: 'relu' # activation function of LSTM
   cnn:
-    layers: [[32,3],[32,3],[32,3]]
-    dropout: 0.1
-    activation: 'relu'
-    input_shape: [28, 28, 3]
+    layers: [[32,3],[32,3],[32,3]] # Number of hidden nodes and filter size for each layer
+    dropout: 0.1 # Dropout value
+    activation: 'relu' # activation function for CNN
+    input_shape: [28, 28, 3] # Input chape of CNN
   fully_connected:
-    hidden_nodes: [256, 128]
-    dropout: 0.1
-    activation: 'tanh'
+    hidden_nodes: [256, 128] # Number of hidden nodes in each layer
+    dropout: 0.1 # Dropout value
+    activation: 'tanh' # Activation function of fully connected
   SVM:
-    kernel: 'linear'
-    c: 1
+    kernel: 'linear' # Kernel type of Support Vector Machines
+    c: 1 # C value
   logistic_regression:
-    c: 1
+    c: 1 # C value
   KNN:
-    k: 5
+    k: 5 # Number of k
   NB:
-    type: 'Gaussian'
+    type: 'Gaussian' # type of baysian classifier
 
-train: "data/Data.xlsx"
-test: "data/test.xlsx"
-dev: "data/dev.xlsx"
-csv_file: "results/accuracy.csv"
-save_model: True
-model_path: "models/model"
+train: "data/Data.xlsx" # Path for training data
+test: "data/test.xlsx" # Path for testing data
+dev: "data/dev.xlsx" # Path for evaluation data
+csv_file: "results/accuracy.csv" # File to log the results
+save_model: True # Save the model or not
+model_path: "models/model" # Path to save the model
